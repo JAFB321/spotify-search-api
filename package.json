@@ -1,0 +1,24 @@
+{
+  "name": "spotify-search-api",
+  "version": "1.0.0",
+  "description": "Rest Api para obtener tracks y otra informacion de la Api de spotify sin necesidad de hacer login - Node js y express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FLANAX550/spotify-search-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FLANAX550/spotify-search-api/issues"
+  },
+  "homepage": "https://github.com/FLANAX550/spotify-search-api#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  }
+}

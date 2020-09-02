@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/FLANAX550/spotify-search-api#readme",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "morgan": "^1.10.0",
     "node-fetch": "^2.6.0"

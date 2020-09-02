@@ -1,7 +1,10 @@
 const express = require('express');
-const app = express();
-
 const morgan = require('morgan');
+require('dotenv').config();
+
+
+
+const app = express();
 
 // settings
 app.set('port', process.env.PORT || 3000);

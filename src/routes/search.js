@@ -6,7 +6,7 @@ const fetch = require('node-fetch');
 
 router.get('/', async (req, res) => {
 
-    
+    const { client_id, client_secret } = require('../credentials.json');
 
     var authOptions = {
         url: 'https://accounts.spotify.com/api/token',

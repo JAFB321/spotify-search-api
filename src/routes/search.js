@@ -1,25 +1,13 @@
 const { Router } = require('express');
 const router = Router();
 
-const fetch = require('node-fetch');
-
-
 router.get('/', async (req, res) => {
 
-    const { client_id, client_secret } = require('../credentials.json');
+  const { ClientCredentials } = require('../spotify/auth');
 
-    var authOptions = {
-        url: 'https://accounts.spotify.com/api/token',
-        headers: {
-          'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
-        },
-        form: {
-          grant_type: 'client_credentials'
-        },
-        json: true
-      };
+  const token = await ClientCredentials();
 
-    fetch()       
+  res.json(token);
 
 });
 

@@ -11,7 +11,6 @@ const fetchEndpoint = (async (queryParams) => {
     const { error, access_token, token_type } = await ClientCredentials();
 
     if (!error) {
-        
 
         const Options = {
             headers: {
@@ -27,6 +26,10 @@ const fetchEndpoint = (async (queryParams) => {
     }
 
 });
+
+const getTracks = (filter, limit, ) => {
+    
+}
 
 module.exports = {
     fetchEndpoint

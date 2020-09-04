@@ -3,11 +3,11 @@ const router = Router();
 
 router.get('/', async (req, res) => {
 
-  const { ClientCredentials } = require('../spotify/auth');
+  const { fetchEndpoint } = require('../spotify/endpoints/search');
 
-  const token = await ClientCredentials();
+  const data = await fetchEndpoint();
 
-  res.json(token);
+  res.json(data);
 
 });
 

@@ -8,29 +8,62 @@ const endpointURL = 'https://api.spotify.com/v1/search';
 
 const fetchEndpoint = (async (queryParams) => {
 
-    const { error, access_token, token_type } = await ClientCredentials();
+    try {
 
-    if (!error) {
+        const { error, access_token, token_type } = await ClientCredentials();
 
-        const Options = {
-            headers: {
-                'Authorization': `${token_type} ${access_token}`
+        if (!error) {
+
+            const Options = {
+                headers: {
+                    'Authorization': `${token_type} ${access_token}`
+                }
+            };
+
+            // Query Params
+            let queryString = "";
+            if(queryParams){
+                queryString = stringify(queryParams);
             }
-        };
+            
+            // Construye la URL
+            let fetchURL = `https://api.spotify.com/v1/search`
+            fetchURL += (queryString || `?${queryString}`);
 
-        const queryString = '';
-        const respuesta = await fetch('https://api.spotify.com/v1/search?q=hallucinate&type=track', Options);
-        const data = await respuesta.json();
+            // fetch a la API
+            const respuesta = await fetch(fetchURL, Options);
+            const data = await respuesta.json();
 
-        return data;
+            return data;
+
+        }
+        else return{
+            error
+        }
+
+    } catch (error) {
+        return {
+            error
+        }
     }
 
 });
 
-const getTracks = (filter, limit, ) => {
-    
+const getTracks = async (filter, limit) => {
+
+    const Params = {
+        q: filter || '',
+        type: 'track',
+        limit: limit || 20
+    }
+
+    console.log(Params.limit);
+
+    const tracks = await fetchEndpoint(Params);
+
+    return tracks;
 }
 
 module.exports = {
-    fetchEndpoint
+    getTracks
 }

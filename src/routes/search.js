@@ -3,9 +3,9 @@ const router = Router();
 
 router.get('/', async (req, res) => {
 
-  const { fetchEndpoint } = require('../spotify/endpoints/search');
+  const { getTracks } = require('../spotify/endpoints/search');
 
-  const data = await fetchEndpoint();
+  const data = await getTracks('hallucinate dua lipa', 14);
 
   res.json(data);
 

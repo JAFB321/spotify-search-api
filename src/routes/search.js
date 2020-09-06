@@ -1,14 +1,14 @@
 const { Router } = require('express');
 const router = Router();
 
+const { getTracks } = require('../spotify/endpoints/search');
+
 router.get('/', async (req, res) => {
 
-  const { getTracks } = require('../spotify/endpoints/search');
-
-  const data = await getTracks('hallucinate dua lipa', 14);
+  const { q, limit } = req.query;
+  const data = await getTracks(q, limit);
 
   res.json(data);
-
 });
 
 module.exports = router;

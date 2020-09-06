@@ -22,13 +22,12 @@ const fetchEndpoint = (async (queryParams) => {
 
             // Query Params
             let queryString = "";
-            if(queryParams){
-                queryString = stringify(queryParams);
+            if (queryParams) {
+                queryString = '?' + stringify(queryParams);
             }
-            
+
             // Construye la URL
-            let fetchURL = `https://api.spotify.com/v1/search`
-            fetchURL += (queryString || `?${queryString}`);
+            const fetchURL = endpointURL + queryString;
 
             // fetch a la API
             const respuesta = await fetch(fetchURL, Options);
@@ -37,7 +36,7 @@ const fetchEndpoint = (async (queryParams) => {
             return data;
 
         }
-        else return{
+        else return {
             error
         }
 
@@ -57,12 +56,10 @@ const getTracks = async (filter, limit) => {
         limit: limit || 20
     }
 
-    console.log(Params.limit);
-
     const tracks = await fetchEndpoint(Params);
 
     return tracks;
-}
+};
 
 module.exports = {
     getTracks

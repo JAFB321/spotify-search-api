@@ -14,11 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 // Routes
-app.get('/', (req, res) => {
-    res.send('respuesta');
-});
-
-app.use('/search/', require('./routes/search'));
+app.use('/', require('./routes/index'));
 
 // Server
 app.listen(app.get('port'), () => {

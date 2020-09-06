@@ -3,7 +3,7 @@ const router = Router();
 
 const { getTracks } = require('../spotify/endpoints/search');
 
-router.get('/', async (req, res) => {
+router.get('/tracks/', async (req, res) => {
 
   const { q, limit } = req.query;
   const data = await getTracks(q, limit);

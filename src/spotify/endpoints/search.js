@@ -2,6 +2,7 @@ const fetch = require('node-fetch');
 const { stringify } = require('querystring');
 
 const { ClientCredentials } = require('../auth');
+const { reduceTracks } = require('../dataReducer');
 
 const endpointURL = 'https://api.spotify.com/v1/search';
 
@@ -54,13 +55,20 @@ const getTracks = async (filter, limit) => {
         q: filter || '',
         type: 'track',
         limit: limit || 20
+    };
+    const data = await fetchEndpoint(Params);
+
+    if (data.error) {
+        return data;
     }
-
-    const tracks = await fetchEndpoint(Params);
-
-    return tracks;
+    else {
+        return reduceTracks(data);
+    }
 };
 
+
+
 module.exports = {
+    fetchEndpoint,
     getTracks
 }

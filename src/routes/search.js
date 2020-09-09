@@ -5,8 +5,17 @@ const { getTracks } = require('../spotify/endpoints/search');
 
 router.get('/tracks/', async (req, res) => {
 
-  const { q, limit } = req.query;
-  const data = await getTracks(q, limit);
+  console.log(req.get('host'));
+
+  const { track, album, artist, limit } = req.query;
+  const params = {
+    track,
+    album,
+    artist,
+    limit
+  };
+
+  const data = await getTracks(params);
 
   res.json(data);
 });

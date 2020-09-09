@@ -7,14 +7,11 @@ const { reduceTracks } = require('../dataReducer');
 const endpointURL = 'https://api.spotify.com/v1/search';
 
 
-const fetchEndpoint = (async (queryParams) => {
+const fetchEndpoint = (async (queryParams, lastToken) => {
 
-    try {
+    const doFetch = async (queryParams, token) => {
 
-        const { error, access_token, token_type } = await ClientCredentials();
-
-        if (!error) {
-
+        try {
             const Options = {
                 headers: {
                     'Authorization': `${token_type} ${access_token}`
@@ -36,23 +33,46 @@ const fetchEndpoint = (async (queryParams) => {
 
             return data;
 
-        }
-        else return {
-            error
+        } catch (error) {
+            return {
+                error
+            }
         }
 
-    } catch (error) {
-        return {
-            error
-        }
+    };
+
+
+    let token = lastToken;
+    if (!lastToken) {
+        token = await ClientCredentials();
     }
+
+    let { error, access_token, token_type } = token;
+
+    if (error) return {
+        error
+    }
+
+    const data = await doFetch(queryParams, token_type, access_token);
+    
+
+
 
 });
 
-const getTracks = async (filter, limit) => {
+const getTracks = async (params) => {
+
+    const { track, album, artist, limit } = params;
+
+    let q = track;
+    q += album ? ` album:${album}` : '';
+    q += artist ? ` artist:${artist}` : '';
+
+    console.log(q);
+
 
     const Params = {
-        q: filter || '',
+        q: q || '',
         type: 'track',
         limit: limit || 20
     };

@@ -15,7 +15,13 @@ router.get('/tracks/', async (req, res) => {
     limit
   };
 
-  const data = await getTracks(params);
+  const token = {
+    access_token: 'sa2', 
+    token_type: 'Bearer'
+  }
+
+  const data = await getTracks(params, token);
+  
 
   res.json(data);
 });

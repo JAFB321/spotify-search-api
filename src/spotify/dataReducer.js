@@ -1,5 +1,5 @@
-const reduceTracks = (data) => {
-    const { href, next, items, limit, offset } = data.tracks;
+const reduceTracks = (tracks) => {
+    const { href, next, items, limit, offset } = tracks;
 
     let lightItems = [];
     items.forEach((value) => {
@@ -24,13 +24,11 @@ const reduceTracks = (data) => {
     });
 
     const ligthData = {
-        tracks: {
-            items: lightItems,
-            href,
-            next,
-            limit,
-            offset
-        }
+        items: lightItems,
+        href,
+        next,
+        limit,
+        offset
     }
 
     return ligthData;

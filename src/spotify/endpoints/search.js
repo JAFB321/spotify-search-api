@@ -15,8 +15,7 @@ const getTracks = async (params) => {
         type: 'track',
         limit: limit || 20
     };
-    const data = await fetchEndpoint(endpointURL, Params, {access_token:'BQCbYaGRS0JodFao2Vrgs',
-    token_type: 'Bearer'});
+    const data = await fetchEndpoint(endpointURL, Params, {});
     const { error, tracks, token } = data;
 
     if (!error && tracks) {

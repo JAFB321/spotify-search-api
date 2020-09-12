@@ -5,8 +5,6 @@ const { getTracks } = require('../spotify/endpoints/search');
 
 router.get('/tracks/', async (req, res) => {
 
-  console.log(req.get('host'));
-
   const { track, album, artist, limit } = req.query;
   const params = {
     track,
@@ -15,15 +13,11 @@ router.get('/tracks/', async (req, res) => {
     limit
   };
 
-  const token = {
-    access_token: 'sa2', 
-    token_type: 'Bearer'
-  }
-
+  const { token } = req.body;
   const data = await getTracks(params, token);
   
-
-  res.json(data);
+  let statusCode = !data.error ? 200 : 400;
+  res.status(statusCode).json(data);
 });
 
 module.exports = router;

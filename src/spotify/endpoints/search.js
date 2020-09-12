@@ -2,7 +2,7 @@ const { fetchEndpoint } = require('./fetchEndpoint');
 const { reduceTracks } = require('../dataReducer');
 const endpointURL = 'https://api.spotify.com/v1/search';
 
-const getTracks = async (params) => {
+const getTracks = async (params, lastToken) => {
 
     const { track, album, artist, limit } = params || {};
 
@@ -18,7 +18,7 @@ const getTracks = async (params) => {
 
     try {
 
-        const data = await fetchEndpoint(endpointURL, Params);
+        const data = await fetchEndpoint(endpointURL, Params, lastToken);
         const { error, tracks, token } = data;
         
         if (!error && tracks) {

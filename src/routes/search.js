@@ -14,6 +14,7 @@ router.get('/tracks/', async (req, res) => {
   };
 
   const { token } = req.body;
+  console.log(token);
   const data = await getTracks(params, token);
   
   let statusCode = !data.error ? 200 : 400;

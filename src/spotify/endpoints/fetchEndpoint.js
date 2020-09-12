@@ -1,11 +1,13 @@
 const fetch = require('node-fetch');
-const { stringify } = require('querystring');
 const colors = require('colors/safe');
+const { stringify } = require('querystring');
 
-const { ClientCredentials } = require('../auth');
+const { ClientCredentials, validateToken } = require('../auth');
 
 
-const doFetch = async (endpointURL, queryParams, token_type, access_token) => {
+const doFetch = async (endpointURL, queryParams, token) => {
+
+    const { token_type, access_token } = token;
 
     try {
         const Options = {
@@ -40,36 +42,30 @@ const doFetch = async (endpointURL, queryParams, token_type, access_token) => {
 const fetchEndpoint = (async (endpointURL, queryParams, lastToken) => {
 
     let token = lastToken;
-    if (!lastToken.access_token) {
+    if (!validateToken(token)) {
         token = await ClientCredentials();
     }
 
     let { error, access_token, token_type } = token;
-    console.log(colors.yellow(token));
-    
+
     if (error) return {
         error
     }
 
-    let data = await doFetch(endpointURL, queryParams, token_type, access_token);
-    
+    let data = await doFetch(endpointURL, queryParams, token);
+
     error = data.error;
     if (error) {
         if (error.status == 401) {
-            console.log(colors.blue(error));
-
             // si el error fue Unathorized se obtienen las credenciales otra vez
             token = await ClientCredentials();
-            console.log(colors.green(token));
-            
+
             ({ error, access_token, token_type } = token);
             if (error) return {
                 error
             }
-            
-            data = await doFetch(endpointURL, queryParams, token_type, access_token); 
-            console.log(colors.red('data'));
-            
+
+            data = await doFetch(endpointURL, queryParams, token);
         }
     }
 

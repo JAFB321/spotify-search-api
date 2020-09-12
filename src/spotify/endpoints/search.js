@@ -4,9 +4,9 @@ const endpointURL = 'https://api.spotify.com/v1/search';
 
 const getTracks = async (params) => {
 
-    const { track, album, artist, limit } = params;
+    const { track, album, artist, limit } = params || {};
 
-    let q = track;
+    let q = track || '';
     q += album ? ` album:${album}` : '';
     q += artist ? ` artist:${artist}` : '';
 
@@ -15,16 +15,26 @@ const getTracks = async (params) => {
         type: 'track',
         limit: limit || 20
     };
-    const data = await fetchEndpoint(endpointURL, Params, {});
-    const { error, tracks, token } = data;
 
-    if (!error && tracks) {
+    try {
+
+        const data = await fetchEndpoint(endpointURL, Params);
+        const { error, tracks, token } = data;
+        
+        if (!error && tracks) {
+            return {
+                tracks: reduceTracks(tracks),
+                token
+            }
+        }
+        else return data;
+
+    }
+    catch (error) {
         return {
-            tracks: reduceTracks(tracks),
-            token
+            error
         }
     }
-    else return data;
 };
 
 

@@ -7,7 +7,8 @@ router.get('/', (req, res) => {
         endpoints: [ 
             {
                 name: 'Busqueda',
-                ruta: '/search'
+                ruta: '/search/',
+                endpoints: ['/tracks']
             }
         ]
     });

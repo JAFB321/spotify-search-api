@@ -1,37 +1,44 @@
 const reduceTracks = (tracks) => {
-    const { href, next, items, limit, offset } = tracks;
 
-    let lightItems = [];
-    items.forEach((value) => {
+    try {
+        const { href, next, items, limit, offset } = tracks;
 
-        const { id, album, artists, external_urls, name, preview_url } = value;
+        let lightItems = [];
+        items.forEach((value) => {
 
-        const lightTrack = {
-            id,
-            name,
-            artists,
-            external_urls,
-            preview_url,
-            album: {
-                id: album.id,
-                name: album.name,
-                external_urls: album.external_urls,
-                images: album.images
-            }
-        };
+            const { id, album, artists, external_urls, name, preview_url } = value;
 
-        lightItems.push(lightTrack)
-    });
+            const lightTrack = {
+                id,
+                name,
+                artists,
+                external_urls,
+                preview_url,
+                album: {
+                    id: album.id,
+                    name: album.name,
+                    external_urls: album.external_urls,
+                    images: album.images
+                }
+            };
 
-    const ligthData = {
-        items: lightItems,
-        href,
-        next,
-        limit,
-        offset
+            lightItems.push(lightTrack)
+        });
+
+        const ligthData = {
+            items: lightItems,
+            href,
+            next,
+            limit,
+            offset
+        }
+
+        return ligthData;
+
     }
-
-    return ligthData;
+    catch (error) {
+        return tracks;
+    }
 };
 
 module.exports = {
